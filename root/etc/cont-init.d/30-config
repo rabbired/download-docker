@@ -3,11 +3,18 @@
 # make our folders
 mkdir -p \
 	/config/qBittorrent \
-	/config/data
+	/config/data \
+    /config/aria2
 
 # copy config
 [[ ! -e /config/qBittorrent/qBittorrent.conf ]] && \
 	cp /defaults/qBittorrent.conf /config/qBittorrent/qBittorrent.conf
+
+[[ ! -e /config/aria2/aria2.conf ]] && \
+	curl --location --output "/config/aria2/aria2.conf" "http://aria2c.com/archiver/aria2.conf"
+
+[[ ! -e /config/aria2/aria2.session ]] && \
+	touch /config/aria2/aria2.session
 
 # chown download directory if currently not set to abc
 if [[ "$(stat -c '%U' /downloads)" != "abc" ]]; then

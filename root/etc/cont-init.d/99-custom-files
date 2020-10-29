@@ -1,6 +1,0 @@
-#!/usr/bin/with-contenv bash
-
-echo "Run FlexGet daemon"
-/usr/local/bin/flexget daemon start --daemonize
-echo "Run python web server"
-python3 -m http.server --cgi -d /ariang 8081 &
