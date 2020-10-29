@@ -4,7 +4,7 @@
 mkdir -p \
 	/config/qBittorrent \
 	/config/data \
-    /config/aria2
+    /config/aria2 \
     /config/flexget
 
 # copy config
