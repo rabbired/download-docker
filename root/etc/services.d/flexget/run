@@ -1,7 +1,6 @@
 #!/usr/bin/with-contenv bash
 
 UMASK_SET=${UMASK_SET:-022}
-UI_PORT=${UI_PORT:-8082}
 
 umask "$UMASK_SET"
 

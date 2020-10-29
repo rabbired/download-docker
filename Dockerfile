@@ -22,22 +22,20 @@ echo "***** add qbitorrent repositories ****" && \
 	geoip-bin \
 	unzip
 
-# add autoremove-torrents flexget subfinder aria2 ariang
+# add autoremove-torrents flexget subfinder aria2
 RUN apt update && apt upgrade --yes && \
   apt install --yes \
   python3-pip \
   aria2 && \
     ln -s /usr/bin/pip3 /bin/pip && \
     pip3 install pip -U && \
-    pip install autoremove-torrents && \
     pip install flexget && \
+    pip install autoremove-torrents && \
     pip install subfinder && \
-    curl -fLO https://glare.now.sh/mayswind/AriaNg/AllInOne.zip && \
-    unzip AllInOne.zip -d /ariang && \
+    pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U && \
     apt clean && \
     apt autoremove --purge -y && \
     rm -rf \
-      AriaNg-1.1.7-AllInOne.zip \
       /tmp/* \
       /var/lib/apt/lists/* \
       /var/tmp/*

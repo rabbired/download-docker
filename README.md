@@ -1,12 +1,12 @@
 # docker download-tools mod by [linuxserver/qbittorrent](https://github.com/linuxserver/docker-qbittorrent)
 
-### qbittorrent-nox + aria2 + FlexGet + [AriaNg](https://github.com/mayswind/AriaNg) + [autoremove-torrents](https://github.com/jerrymakesjelly/autoremove-torrents) + [subfinder](https://github.com/ausaki/subfinder)
+### qbittorrent-nox + aria2 + FlexGet + [autoremove-torrents](https://github.com/jerrymakesjelly/autoremove-torrents) + [subfinder](https://github.com/ausaki/subfinder)
 
 ## Usage
 
 Here are some example snippets to help you get started creating a container.
 
-### docker-compose ([recommended](https://docs.linuxserver.io/general/docker-compose))
+### docker-compose
 
 Compatible with docker-compose v2 schemas.
 
