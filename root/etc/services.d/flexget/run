@@ -4,4 +4,4 @@ UMASK_SET=${UMASK_SET:-022}
 
 umask "$UMASK_SET"
 
-exec s6-setuidgid abc /usr/local/bin/flexget daemon start --daemonize
+exec s6-setuidgid abc /usr/local/bin/flexget --cron --loglevel=WARNING daemon start --daemonize
