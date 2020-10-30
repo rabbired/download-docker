@@ -4,4 +4,4 @@ UMASK_SET=${UMASK_SET:-022}
 
 umask "$UMASK_SET"
 
-exec s6-setuidgid abc /usr/bin/aria2c --conf-path=/config/aria2/aria2.conf --save-session=/config/aria2/aria2.session -D
+exec s6-setuidgid abc /usr/bin/aria2c --conf-path=/config/aria2/aria2.conf -D

@@ -12,10 +12,7 @@ mkdir -p \
 	cp /defaults/qBittorrent.conf /config/qBittorrent/qBittorrent.conf
 
 [[ ! -e /config/aria2/aria2.conf ]] && \
-	curl --location --output "/config/aria2/aria2.conf" "http://aria2c.com/archiver/aria2.conf"
-
-[[ ! -e /config/aria2/aria2.session ]] && \
-	touch /config/aria2/aria2.session
+    cp /defaults/aria2.conf /config/aria2/aria2.conf
 
 [[ ! -e /config/flexget/config.yml ]] && \
     cp /defaults/config.yml /config/flexget/config.yml
