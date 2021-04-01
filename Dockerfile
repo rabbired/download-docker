@@ -19,7 +19,7 @@ echo "***** add qbitorrent repositories ****" && \
   bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbitorrent.list' && \
   apt update && \
   apt install -y \
-	qbittorrent-nox==4.4.0~202103311003-7254-f8067aa59~ubuntu20.04.1 \
+	qbittorrent-nox=4.4.0~202103311003-7254-f8067aa59~ubuntu20.04.1 \
 	unrar \
 	geoip-bin \
 	unzip
