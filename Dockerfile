@@ -7,26 +7,24 @@ ARG DEBIAN_FRONTEND="noninteractive"
 # add repo and install qbitorrent
 RUN \
 echo "***** add qbitorrent repositories ****" && \
-  apt update && \
+  apt update && apt upgrade -y && \
   apt install -y \
 	gnupg \
 	python3 && \
   gpg --keyserver keyserver.ubuntu.com --recv D35164147CA69FC4 && \
   gpg --export --armor D35164147CA69FC4 | apt-key add - && \
-  bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbitorrent.list' && \
-  bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbitorrent.list' && \
   bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbitorrent.list' && \
   bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbitorrent.list' && \
   apt update && \
   apt install -y \
-	qbittorrent-nox=4.4.0~202103311003-7254-f8067aa59~ubuntu20.04.1 \
+	qbittorrent-nox=4.4.0~* \
 	unrar \
 	geoip-bin \
 	unzip
 
 # add autoremove-torrents flexget subfinder aria2
-RUN apt update && apt upgrade --yes && \
-  apt install --yes \
+RUN apt update && \
+  apt install -y \
   python3-pip \
   aria2 && \
     ln -s /usr/bin/pip3 /bin/pip && \
