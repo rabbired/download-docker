@@ -8,16 +8,17 @@ ARG DEBIAN_FRONTEND="noninteractive"
 RUN \
 echo "***** add qbitorrent repositories ****" && \
   apt update && apt upgrade -y && \
-  apt install -y \
-	gnupg \
-	python3 && \
+  apt install -y gnupg && \
   gpg --keyserver keyserver.ubuntu.com --recv D35164147CA69FC4 && \
   gpg --export --armor D35164147CA69FC4 | apt-key add - && \
-  bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbitorrent.list' && \
-  bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbitorrent.list' && \
+  bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu focal main" \
+  >> /etc/apt/sources.list.d/qbittorrent.list' && \
+  bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu focal main" \
+  >> /etc/apt/sources.list.d/qbittorrent.list' && \
   apt update && \
   apt install -y \
-	qbittorrent-nox=4.4.0~* \
+#	qbittorrent-nox=4.4.0~* \
+	qbittorrent-nox \
 	unrar \
 	geoip-bin \
 	unzip
@@ -25,9 +26,10 @@ echo "***** add qbitorrent repositories ****" && \
 # add autoremove-torrents flexget subfinder aria2
 RUN apt update && \
   apt install -y \
+  python3 \
   python3-pip \
   aria2 && \
-    ln -s /usr/bin/pip3 /bin/pip && \
+    ln -s /usr/bin/pip3 /usr/bin/pip && \
     pip3 install pip -U && \
     pip install flexget && \
     pip install autoremove-torrents && \
