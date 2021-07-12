@@ -2,22 +2,22 @@ FROM rabbired/ubuntu-baseimage:latest
 MAINTAINER Red Z rabbired@outlook.com
 
 # environment settings
-ARG DEBIAN_FRONTEND="noninteractive"
+ARG ubuntu_FRONTEND="noninteractive"
 
 # add repo and install qbitorrent
 RUN \
-echo "***** add qbitorrent repositories ****" && \
+  echo "***** add qbitorrent repositories ****" && \
   apt update && apt upgrade -y && \
   apt install -y gnupg && \
   gpg --keyserver keyserver.ubuntu.com --recv D35164147CA69FC4 && \
   gpg --export --armor D35164147CA69FC4 | apt-key add - && \
-  bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu focal main" \
-  >> /etc/apt/sources.list.d/qbittorrent.list' && \
-  bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu focal main" \
-  >> /etc/apt/sources.list.d/qbittorrent.list' && \
+  bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbittorrent.list' && \
+  bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu $VERSION_CODENAME main" >> /etc/apt/sources.list.d/qbittorrent.list' && \
+  echo "***** install qbitorrent and aria2 ****" && \
   apt update && \
   apt install -y \
 	qbittorrent-nox \
+    aria2 \
 	unrar \
 	geoip-bin \
 	unzip && \
@@ -27,23 +27,29 @@ echo "***** add qbitorrent repositories ****" && \
       /var/lib/apt/lists/* \
       /var/tmp/*
 
-# add autoremove-torrents flexget subfinder aria2
+# add py3 pip3
 RUN apt update && \
   apt install -y \
   python3 \
-  python3-pip \
-  aria2 && \
+  python3-pip && \
     pip3 install pip -U && \
-    pip3 install flexget && \
-    pip3 install autoremove-torrents && \
-    pip3 install subfinder && \
-    pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U && \
     apt clean && \
     apt autoremove --purge -y && \
     rm -rf \
+      ~/.cache/pip \
       /tmp/* \
       /var/lib/apt/lists/* \
       /var/tmp/*
+
+# add autoremove-torrents
+RUN pip3 --no-cache-dir install autoremove-torrents
+
+# add flexget
+RUN pip3 --no-cache-dir install flexget
+
+# add subfinder
+RUN pip3 --no-cache-dir install subfinder && \
+    pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 --no-cache-dir install -U
 
 ENV HOME="/config" \
 XDG_CONFIG_HOME="/config" \
