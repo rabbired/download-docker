@@ -11,17 +11,21 @@ echo "***** add qbitorrent repositories ****" && \
   apt install -y gnupg && \
   gpg --keyserver keyserver.ubuntu.com --recv D35164147CA69FC4 && \
   gpg --export --armor D35164147CA69FC4 | apt-key add - && \
-  bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu focal main" \
+  bash -l -c 'echo "deb http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu focal main" \
   >> /etc/apt/sources.list.d/qbittorrent.list' && \
-  bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-unstable/ubuntu focal main" \
+  bash -l -c 'echo "deb-src http://ppa.launchpad.net/qbittorrent-team/qbittorrent-stable/ubuntu focal main" \
   >> /etc/apt/sources.list.d/qbittorrent.list' && \
   apt update && \
   apt install -y \
-#	qbittorrent-nox=4.4.0~* \
 	qbittorrent-nox \
 	unrar \
 	geoip-bin \
-	unzip
+	unzip && \
+    apt autoremove --purge -y && \
+    rm -rf \
+      /tmp/* \
+      /var/lib/apt/lists/* \
+      /var/tmp/*
 
 # add autoremove-torrents flexget subfinder aria2
 RUN apt update && \
@@ -29,12 +33,11 @@ RUN apt update && \
   python3 \
   python3-pip \
   aria2 && \
-    ln -s /usr/bin/pip3 /usr/bin/pip && \
     pip3 install pip -U && \
-    pip install flexget && \
-    pip install autoremove-torrents && \
-    pip install subfinder && \
-    pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U && \
+    pip3 install flexget && \
+    pip3 install autoremove-torrents && \
+    pip3 install subfinder && \
+    pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 install -U && \
     apt clean && \
     apt autoremove --purge -y && \
     rm -rf \
