@@ -32,7 +32,7 @@ RUN apt update && \
   apt install -y \
   python3 \
   python3-pip && \
-    pip3 install pip -U && \
+    pip3 --no-cache-dir install pip -U && \
     apt clean && \
     apt autoremove --purge -y && \
     rm -rf \

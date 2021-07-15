@@ -1,15 +1,54 @@
 FROM rabbired/alpine-baseimage:latest
 MAINTAINER Red Z rabbired@outlook.com
 
+ENV HOME="/config" \
+XDG_CONFIG_HOME="/config" \
+XDG_DATA_HOME="/config"
+
 COPY install_qbittorrent.sh /usr/sbin/
 
-# *** install qbitorrent ***
+# *** install qbitorrent and aria2c ***
 RUN \
-  /bin/sh /usr/sbin/install_qbittorrent.sh
+  /bin/sh /usr/sbin/install_qbittorrent.sh && \
+  apk add --no-cache aria2 && \
+  rm -rf \
+	/var/lib/apk/lists/* \
+    /var/cache/apk/* \
+	/root/.cache \
+	/tmp/*
 
-# add local files
+# *** add py3 pip3 ***
+RUN \
+  apk add --no-cache python3 py3-pip \
+  py3-greenlet py3-brotli py3-psutil \
+  py3-lxml py3-gevent \
+  python3-dev gcc libxml2-dev libxslt-dev libffi-dev musl-dev linux-headers g++ && \
+  pip3 --no-cache-dir install -U pip && \
+  if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
+  if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
+  rm -rf \
+	/var/lib/apk/lists/* \
+    /var/cache/apk/* \
+	/root/.cache \
+	/tmp/*
+
+# ***add autoremove-torrents ***
+RUN pip3 --no-cache-dir install \
+  autoremove-torrents \
+  flexget \
+  subfinder && \
+#  pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 --no-cache-dir install -U --ignore-installed && \
+  apk del --purge python3-dev gcc libxml2-dev libxslt-dev \
+    libffi-dev musl-dev linux-headers g++ && \
+  rm -rf \
+	/var/lib/apk/lists/* \
+    /var/cache/apk/* \
+	/root/.cache \
+	/tmp/*
+    
+# *** add local files ***
 COPY root/ /
 
-# ports and volumes
+# *** ports and volumes ***
 EXPOSE 6881 6881/udp 8080 8081
 #VOLUME /config /downloads
