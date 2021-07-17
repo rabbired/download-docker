@@ -40,7 +40,7 @@ RUN pip3 --no-cache-dir install \
   if [[ ! -e /usr/local/bin/flexget ]]; then ln -sf `which flexget` /usr/local/bin/flexget; fi && \
   pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 --no-cache-dir install -U --ignore-installed && \
   apk del --purge python3-dev gcc libxml2-dev libxslt-dev \
-  libffi-dev musl-dev linux-headers g++ && \
+  libffi-dev musl-dev g++ && \
   rm -rf \
 	/var/lib/apk/lists/* \
 	/var/cache/apk/* \
