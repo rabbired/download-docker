@@ -4,18 +4,18 @@
 mkdir -p \
 	/config/qBittorrent \
 	/config/data \
-    /config/aria2 \
-    /config/flexget
+	/config/aria2 \
+	/config/flexget
 
 # copy config
 [[ ! -e /config/qBittorrent/qBittorrent.conf ]] && \
 	cp /defaults/qBittorrent.conf /config/qBittorrent/qBittorrent.conf
 
 [[ ! -e /config/aria2/aria2.conf ]] && \
-    cp /defaults/aria2.conf /config/aria2/aria2.conf
+	cp /defaults/aria2.conf /config/aria2/aria2.conf
 
 [[ ! -e /config/flexget/config.yml ]] && \
-    cp /defaults/config.yml /config/flexget/config.yml
+	cp /defaults/config.yml /config/flexget/config.yml
 
 # chown download directory if currently not set to abc
 if [[ "$(stat -c '%U' /downloads)" != "abc" ]]; then
