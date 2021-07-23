@@ -25,7 +25,7 @@ RUN \
   py3-gevent \
   python3-dev gcc libxml2-dev libxslt-dev libffi-dev musl-dev linux-headers g++ && \
   pip3 --no-cache-dir install -U pip && \
-  if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
+  if [[ ! -e /usr/local/bin/pip3 ]]; then ln -sf /usr/local/bin/pip3 /bin/pip; fi && \
   if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
   rm -rf \
     /var/lib/apk/lists/* \
@@ -38,7 +38,7 @@ RUN pip3 --no-cache-dir install \
 #  flexget \
   autoremove-torrents \
   subfinder && \
-  if [[ ! -e /usr/local/bin/flexget ]]; then ln -sf `which flexget` /usr/local/bin/flexget; fi && \
+  if [[ ! -e $(which flexget) ]]; then ln -sf `which flexget` /usr/local/bin/flexget; fi && \
 #  pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip3 --no-cache-dir install -U --ignore-installed && \
   apk del --purge python3-dev gcc libxml2-dev libxslt-dev libffi-dev musl-dev linux-headers g++ && \
   rm -rf \
