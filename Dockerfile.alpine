@@ -21,8 +21,7 @@ RUN \
 RUN \
   apk add --no-cache python3 py3-pip \
   py3-greenlet py3-brotli py3-psutil \
-  py3-lxml \
-  py3-gevent \
+  py3-lxml curl py3-gevent \
   python3-dev gcc libxml2-dev libxslt-dev libffi-dev musl-dev linux-headers g++ && \
   pip3 --no-cache-dir install -U pip && \
   if [[ ! -e /usr/local/bin/pip3 ]]; then ln -sf /usr/local/bin/pip3 /bin/pip; fi && \
